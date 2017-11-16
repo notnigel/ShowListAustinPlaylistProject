@@ -10,10 +10,12 @@ public class Playlist {
 	private String name;
 	private ArrayList<Artist> artists;
 	private String description;
+	private String id;
 	
-	public Playlist(String searchDate){
+	public Playlist(String searchDate, ArrayList<Artist> artists){
 		this.name = "ShowListAustin : " + searchDate;
-		this.artists = new ArrayList<>();
+		this.description = "This playlist contains bands playing on " + searchDate;
+		this.artists = artists;
 	}
 
 	public Date getDate() {
@@ -46,5 +48,13 @@ public class Playlist {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }
