@@ -24,6 +24,7 @@ public class TopTrackRequestClient {
   
   static final String OAUTH2ACCESSTOKEN = "BQAzXLdIgNh9TzMeoooBIVzzjG3DjwNOpY4Xr0Xsl63zwyDyGeX-mZYpCaDmuXoWSfq_MpFFQr1EyOjefQXQHw";
   static final String TYPE = "artist";
+  static final int TOPTRACKCOUNT = 1;
 
   public static class SpotifyUrl extends GenericUrl {
 
@@ -43,23 +44,26 @@ public class TopTrackRequestClient {
             request.setParser(new JsonObjectParser(JSON_FACTORY));
           }
         });
+    String oauth2AccessToken = "Bearer " + Oauth2Controller.retrieveAccessToken();    
     String baseUrl = "https://api.spotify.com/v1/artists/";
     baseUrl = 	baseUrl + artist + 
-    			"/top-tracks?country=US" + "&" +
-				"access_token=" + OAUTH2ACCESSTOKEN; 
-    System.out.println(baseUrl);
+    			"/top-tracks?country=US"; 
     SpotifyUrl url = new SpotifyUrl(baseUrl);
     url.fields = "id,tags,title,url";
     HttpRequest request = requestFactory.buildGetRequest(url);
     HttpHeaders headers = new HttpHeaders();
     headers.setAccept("application/json");
+    headers.setAuthorization(oauth2AccessToken);
     request.setHeaders(headers);
     HttpResponse response = request.execute();
   	ObjectMapper objectMapper = new ObjectMapper();
-  	TopTracksResponse artistResponse = objectMapper.readValue(response.parseAsString(), TopTracksResponse.class);
+  	TopTracksResponse topTracksResponse = objectMapper.readValue(response.parseAsString(), TopTracksResponse.class);
   		
-  	return "a"; 
-
+  	if (!topTracksResponse.getTracks().isEmpty()) {
+  		return topTracksResponse.getTracks().get(0).getUri();
+  	}
+  	
+  	return null;
     
   }
 

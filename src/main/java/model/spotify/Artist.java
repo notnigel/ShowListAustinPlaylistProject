@@ -3,6 +3,7 @@ package model.spotify;
 public class Artist {
 	private String name;
 	private String id;
+	private String trackUris;
 	
 	public Artist (){
 		
@@ -18,5 +19,11 @@ public class Artist {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getTrackUris() {
+		return trackUris;
+	}
+	public void setTrackUris(String trackUris) {
+		this.trackUris = trackUris;
 	}
 }

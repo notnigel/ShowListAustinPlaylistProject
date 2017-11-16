@@ -22,7 +22,6 @@ public class ArtistRequestClient {
   static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
   static final JsonFactory JSON_FACTORY = new JacksonFactory();
   
-  static final String OAUTH2ACCESSTOKEN = "BQAzXLdIgNh9TzMeoooBIVzzjG3DjwNOpY4Xr0Xsl63zwyDyGeX-mZYpCaDmuXoWSfq_MpFFQr1EyOjefQXQHw";
   static final String TYPE = "artist";
 
   public static class SpotifyUrl extends GenericUrl {
@@ -46,30 +45,35 @@ public class ArtistRequestClient {
     String baseUrl = "https://api.spotify.com/v1/search?";
     artist = artist.replaceAll(" ", "+");
     artist = artist.toLowerCase();
+    
+    //Get access token
+    String oauth2AccessToken = "Bearer " + Oauth2Controller.retrieveAccessToken();
     baseUrl = 	baseUrl + 
 				"q=" + artist + "&" +
-				"type=" + TYPE + "&" +
-				"access_token=" + OAUTH2ACCESSTOKEN; 
-    System.out.println(baseUrl);
+				"type=" + TYPE; 
     SpotifyUrl url = new SpotifyUrl(baseUrl);
     url.fields = "id,tags,title,url";
     HttpRequest request = requestFactory.buildGetRequest(url);
     HttpHeaders headers = new HttpHeaders();
     headers.setAccept("application/json");
+    headers.setAuthorization(oauth2AccessToken);
     request.setHeaders(headers);
     HttpResponse response = request.execute();
   	ObjectMapper objectMapper = new ObjectMapper();
   	ArtistResponse artistResponse = objectMapper.readValue(response.parseAsString(), ArtistResponse.class);
-  		
-  	return artistResponse.getArtists().getItems().get(0).getId();
 
+	if(!artistResponse.getArtists().getItems().isEmpty()) {
+		return artistResponse.getArtists().getItems().get(0).getId();
+	}
+	
+	return null;
     
   }
 
   public static void main(String[] args) {
     try {
       try {
-        run("Muse");
+        run("Me Mer Mo Monday with Kid Invincible");
         return;
       } catch (HttpResponseException e) {
         System.err.println(e.getMessage());

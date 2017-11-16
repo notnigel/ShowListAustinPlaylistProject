@@ -1,14 +1,19 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
+import controllers.webrequest.spotify.AddTracksRequestClient;
 import controllers.webrequest.spotify.ArtistRequestClient;
+import controllers.webrequest.spotify.CreatePlaylistRequestClient;
+import controllers.webrequest.spotify.TopTrackRequestClient;
 import model.Playlist;
 import model.spotify.Artist;
 
@@ -18,7 +23,7 @@ public class WebScrapeController {
 
 	public static void main(String[] args) {
 		
-	    String searchDate = "2017November6" ;
+	    String searchDate = "2017November19";
 		String baseUrl = "http://showlistaustin.com" ;
 		WebClient client = new WebClient();
 		client.getOptions().setCssEnabled(false);
@@ -49,7 +54,6 @@ public class WebScrapeController {
 					}
 					
 					//Create playlist
-					playlist = new Playlist(searchDate);
 					ArrayList<Artist> artists = new ArrayList<Artist>();
 					
 					for (String band : bands) {
@@ -58,13 +62,58 @@ public class WebScrapeController {
 						artists.add(a);
 					}
 					
-					ArtistRequestClient artistRequestClient = null;
-					System.out.println(artistRequestClient.run(artists.get(1).getName()));
+					//Retrieve artist ids
+					String artistId = "";
+					for (int i = 0; i <artists.size(); i++) {
+						artistId = ArtistRequestClient.run(artists.get(i).getName());
+						if(artistId != null && !artistId.equals("")) {
+							artists.get(i).setId(artistId);
+						}
+					}
+					
+					//Remove artists without Spotify artist IDs
+					for (Iterator<Artist> iterator = artists.iterator(); iterator.hasNext(); ) {
+						  Artist a = iterator.next();
+						  if(a.getId() == null){
+						    iterator.remove();
+						  }
+					}
+					
+					//Retrieve artist URIs
+					String topTrackUri = "";
+					for (int i = 0; i <artists.size(); i++) {
+						topTrackUri = TopTrackRequestClient.run(artists.get(i).getId());
+						if(topTrackUri != null && !topTrackUri.equals("")) {
+							artists.get(i).setTrackUris(topTrackUri);
+						}
+					}
+					
+					//Remove empty URIs or duplicate URIs
+				    Set<String> attributes = new HashSet<String>();
+				    List duplicates = new ArrayList<Artist>();
 
+				    for(Artist a : artists) {
+				        if(attributes.contains(a.getTrackUris())) {
+				            duplicates.add(a);
+				        }
+				        attributes.add(a.getTrackUris());
+				    }
+
+				    artists.removeAll(duplicates);
+				    
+				    //Create playlist
+				    Playlist playlist = new Playlist(searchDate, artists);
+				    playlist.setId(CreatePlaylistRequestClient.run(playlist));
+				    
+				    //Add tracks to playlist
+				    AddTracksRequestClient.run(playlist);
+				    
 				}
 			}
 		} catch(Exception e){
 			e.printStackTrace();
+		} finally {
+			client.close();
 		}
 
 	}
