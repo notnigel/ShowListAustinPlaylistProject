@@ -27,16 +27,13 @@ public class TopTrackRequestClient {
   static final int TOPTRACKCOUNT = 1;
 
   public static class SpotifyUrl extends GenericUrl {
-
     public SpotifyUrl(String encodedUrl) {
       super(encodedUrl);
     }
-
-    @Key
-    public String fields;
   }
 
   public static String run(String artist) throws Exception {
+	  
     HttpRequestFactory requestFactory =
         HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
             @Override
@@ -44,12 +41,12 @@ public class TopTrackRequestClient {
             request.setParser(new JsonObjectParser(JSON_FACTORY));
           }
         });
+    
     String oauth2AccessToken = "Bearer " + Oauth2Controller.retrieveAccessToken();    
     String baseUrl = "https://api.spotify.com/v1/artists/";
     baseUrl = 	baseUrl + artist + 
     			"/top-tracks?country=US"; 
     SpotifyUrl url = new SpotifyUrl(baseUrl);
-    url.fields = "id,tags,title,url";
     HttpRequest request = requestFactory.buildGetRequest(url);
     HttpHeaders headers = new HttpHeaders();
     headers.setAccept("application/json");
@@ -66,18 +63,5 @@ public class TopTrackRequestClient {
   	return null;
     
   }
-
-  public static void main(String[] args) {
-    try {
-      try {
-        run("Muse");
-        return;
-      } catch (HttpResponseException e) {
-        System.err.println(e.getMessage());
-      }
-    } catch (Throwable t) {
-      t.printStackTrace();
-    }
-    System.exit(1);
-  }
+  
 }

@@ -33,13 +33,9 @@ public class CreatePlaylistRequestClient {
 	  private static final Set<Integer> SUCCESSCODES = new HashSet<Integer>(Arrays.asList(SUCCESS));
 
 	  public static class SpotifyUrl extends GenericUrl {
-
 	    public SpotifyUrl(String encodedUrl) {
 	      super(encodedUrl);
 	    }
-
-	    @Key
-	    public String fields;
 	  }
 
 	  public static String run(Playlist playlist) throws Exception {

@@ -102,7 +102,6 @@ public class Oauth2Controller {
 					"redirect_uri=https://127.0.0.1" + "&" +
 					"scope=playlist-modify-public";
 	  SpotifyUrl url = new SpotifyUrl(baseUrl);
-	  url.fields = "id,tags,title,url";
 	  HttpRequest request = requestFactory.buildGetRequest(url);
 	  HttpResponse response = request.execute();
 	  return null;

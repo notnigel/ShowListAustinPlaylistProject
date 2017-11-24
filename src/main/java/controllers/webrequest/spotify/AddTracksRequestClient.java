@@ -38,16 +38,12 @@ public class AddTracksRequestClient {
 	  private static final Set<Integer> SUCCESSCODES = new HashSet<Integer>(Arrays.asList(SUCCESS));
 
 	  public static class SpotifyUrl extends GenericUrl {
-
 	    public SpotifyUrl(String encodedUrl) {
 	      super(encodedUrl);
 	    }
-
-	    @Key
-	    public String fields;
 	  }
 
-	  public static String run(Playlist playlist) throws Exception {
+	  public static void run(Playlist playlist) throws Exception {
 	    HttpRequestFactory requestFactory =
 	        HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
 	            @Override
@@ -78,8 +74,6 @@ public class AddTracksRequestClient {
 	    HttpResponse response = request.execute();
 	    
 	    System.out.println(response.parseAsString());
-	  	
-	  	return null;
 	    
 	  }
 }

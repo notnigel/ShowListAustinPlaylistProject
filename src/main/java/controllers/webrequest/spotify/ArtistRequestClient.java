@@ -52,7 +52,6 @@ public class ArtistRequestClient {
 				"q=" + artist + "&" +
 				"type=" + TYPE; 
     SpotifyUrl url = new SpotifyUrl(baseUrl);
-    url.fields = "id,tags,title,url";
     HttpRequest request = requestFactory.buildGetRequest(url);
     HttpHeaders headers = new HttpHeaders();
     headers.setAccept("application/json");
