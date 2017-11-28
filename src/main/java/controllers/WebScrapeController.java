@@ -23,7 +23,7 @@ public class WebScrapeController {
 
 	public static void main(String[] args) {
 		
-	    String searchDate = "2017November19";
+	    String searchDate = "2017December2";
 		String baseUrl = "http://showlistaustin.com" ;
 		WebClient client = new WebClient();
 		client.getOptions().setCssEnabled(false);
@@ -50,6 +50,8 @@ public class WebScrapeController {
 					rawEvent = rawEvent.replaceAll("\\[.+\\]", "");
 					String [] bands = rawEvent.split("(,|\\n)");
 					for (int i = 0 ; i <bands.length; i++) {
+						bands[i] = bands[i].replaceAll("\\(.+\\)", "");
+						bands[i] = bands[i].replaceAll("#", "");
 						bands[i] = bands[i].trim();
 					}
 					

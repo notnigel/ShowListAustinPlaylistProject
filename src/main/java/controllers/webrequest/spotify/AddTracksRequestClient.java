@@ -58,9 +58,12 @@ public class AddTracksRequestClient {
 	    			"tracks?uris=";
 	    ArrayList<Artist> artists = playlist.getArtists();
 	    for (int i = 0; i < artists.size(); i++) {
-	    	baseUrl += URLEncoder.encode(artists.get(i).getTrackUris(), "UTF-8");;
-	    	if((artists.size() - 1) != i)
-	    		baseUrl += ",";
+	    	String trackUri = artists.get(i).getTrackUris();
+	    	if (trackUri != null) {
+	    		baseUrl += URLEncoder.encode(trackUri, "UTF-8");;
+		    	if((artists.size() - 1) != i)
+		    		baseUrl += ",";
+	    	}
 	    }
 	    SpotifyUrl url = new SpotifyUrl(baseUrl);
 	    
