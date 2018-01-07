@@ -23,7 +23,7 @@ public class WebScrapeController {
 
 	public static void main(String[] args) {
 		
-	    String searchDate = "2017December2";
+	    String searchDate = "2018January8";
 		String baseUrl = "http://showlistaustin.com" ;
 		WebClient client = new WebClient();
 		client.getOptions().setCssEnabled(false);
@@ -48,10 +48,12 @@ public class WebScrapeController {
 					String rawEvent = item.getTextContent();
 					rawEvent = rawEvent.replaceAll("at\\s(\\w+|\\s)*\\(.+\\)\\s\\[\\+\\]", "");
 					rawEvent = rawEvent.replaceAll("\\[.+\\]", "");
+					rawEvent = rawEvent.replaceAll("with", ",");					
 					String [] bands = rawEvent.split("(,|\\n)");
 					for (int i = 0 ; i <bands.length; i++) {
 						bands[i] = bands[i].replaceAll("\\(.+\\)", "");
 						bands[i] = bands[i].replaceAll("#", "");
+						bands[i] = bands[i].replaceAll(".*presents", "");
 						bands[i] = bands[i].trim();
 					}
 					
@@ -60,8 +62,10 @@ public class WebScrapeController {
 					
 					for (String band : bands) {
 						Artist a = new Artist();
-						a.setName(band);
-						artists.add(a);
+						if(!band.equals("")) {
+							a.setName(band);
+							artists.add(a);
+						}
 					}
 					
 					//Retrieve artist ids
