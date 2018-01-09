@@ -2,6 +2,8 @@ package model;
 
 import model.spotify.Artist;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -11,9 +13,14 @@ public class Playlist {
 	private ArrayList<Artist> artists;
 	private String description;
 	private String id;
+
+	private enum dateFormats {
+		yyyyMMMMdd,
+		yyyyMMMMd
+	}
 	
-	public Playlist(String searchDate, ArrayList<Artist> artists){
-		this.name = "ShowListAustin : " + searchDate;
+	public Playlist(String searchDate, ArrayList<Artist> artists) throws ParseException {
+		this.name = "ShowListAustin : " + convertDateFormat(searchDate);
 		this.description = "This playlist contains bands playing on " + searchDate;
 		this.artists = artists;
 	}
@@ -56,5 +63,29 @@ public class Playlist {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	/*
+	 * This function converts a string date into the java.util Date.
+	 */
+	public String convertDateFormat(String inputDate) throws ParseException {
+		
+		String formatUsed = "yyyyMMMMdd";
+		
+		for (dateFormats format : dateFormats.values()) { 
+	          SimpleDateFormat sdf1 = new SimpleDateFormat(format.toString());
+	            try {
+	                sdf1.parse(inputDate);
+	                formatUsed = (format.toString());
+	            } catch (ParseException e) {
+	            	System.out.println(formatUsed);
+	            }
+		}
+
+		SimpleDateFormat sdf = new SimpleDateFormat(formatUsed);
+		Date date = sdf.parse(inputDate);
+		sdf = new SimpleDateFormat("MMMM dd, yyyy");
+		return sdf.format(date);
+	
 	}
 }

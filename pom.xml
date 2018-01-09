@@ -75,6 +75,12 @@
 			<artifactId>google-oauth-client-jetty</artifactId>
 			<version>${project.oauth.version}</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.mockito</groupId>
+		    <artifactId>mockito-all</artifactId>
+		    <version>1.9.5</version>
+		    <scope>test</scope>
+		</dependency>
 	</dependencies>
 	<properties>
 		<project.http.version>1.23.0</project.http.version>
