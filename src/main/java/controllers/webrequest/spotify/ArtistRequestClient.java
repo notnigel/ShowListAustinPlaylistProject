@@ -19,22 +19,22 @@ import model.spotify.artistresponse.ArtistResponse;
 
 public class ArtistRequestClient {
 
-  static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-  static final JsonFactory JSON_FACTORY = new JacksonFactory();
-  
-  static final String TYPE = "artist";
+	static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+	static final JsonFactory JSON_FACTORY = new JacksonFactory();
 
-  public static class SpotifyUrl extends GenericUrl {
+	static final String TYPE = "artist";
 
-    public SpotifyUrl(String encodedUrl) {
-      super(encodedUrl);
-    }
+	public static class SpotifyUrl extends GenericUrl {
 
-    @Key
-    public String fields;
-  }
+		public SpotifyUrl(String encodedUrl) {
+			super(encodedUrl);
+		}
 
-  public static String run(String artist) throws Exception {
+		@Key
+		public String fields;
+	}
+
+	public static String run(String artist) throws Exception {
     HttpRequestFactory requestFactory =
         HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
             @Override
@@ -43,13 +43,18 @@ public class ArtistRequestClient {
           }
         });
     String baseUrl = "https://api.spotify.com/v1/search?";
-    artist = artist.replaceAll(" ", "+");
-    artist = artist.toLowerCase();
+    String encodedArtist = artist.replaceAll(" ", "+");
+    encodedArtist = encodedArtist.toLowerCase();
+    
+    //Can't start a string like this
+    if(artist.indexOf("&") == 0) {
+    	return null;
+    }
     
     //Get access token
-    String oauth2AccessToken = "Bearer " + Oauth2Controller.retrieveAccessToken();
+    String oauth2AccessToken = Oauth2Controller.getOAUTH2AUTHTOKEN();
     baseUrl = 	baseUrl + 
-				"q=" + artist + "&" +
+				"q=" + encodedArtist + "&" +
 				"type=" + TYPE; 
     SpotifyUrl url = new SpotifyUrl(baseUrl);
     HttpRequest request = requestFactory.buildGetRequest(url);
@@ -61,18 +66,33 @@ public class ArtistRequestClient {
   	ObjectMapper objectMapper = new ObjectMapper();
   	ArtistResponse artistResponse = objectMapper.readValue(response.parseAsString(), ArtistResponse.class);
 
-	if(!artistResponse.getArtists().getItems().isEmpty()) {
-		return artistResponse.getArtists().getItems().get(0).getId();
-	}
+
 	
-	return null;
+	return processResponse(artistResponse, artist);
     
   }
+
+	/*
+	 * This function parses the response, validates the artist name, and returns the
+	 * artist id.
+	 */
+	public static String processResponse(ArtistResponse artistResponse, String artist){
+		if(!artistResponse.getArtists().getItems().isEmpty()) {
+			
+			for (int i = 0; i < artistResponse.getArtists().getItems().size(); i++) {
+				if (artistResponse.getArtists().getItems().get(i).getName().equals(artist)) {
+					return artistResponse.getArtists().getItems().get(i).getId();
+				}
+			}
+		}
+		
+		return null;
+	}
 
   public static void main(String[] args) {
     try {
       try {
-        run("Me Mer Mo Monday with Kid Invincible");
+        run("Bugg");
         return;
       } catch (HttpResponseException e) {
         System.err.println(e.getMessage());

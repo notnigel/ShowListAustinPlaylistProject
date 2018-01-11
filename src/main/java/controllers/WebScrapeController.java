@@ -23,7 +23,7 @@ public class WebScrapeController {
 
 	public static void main(String[] args) {
 		
-	    String searchDate = "2018January8";
+	    String searchDate = "2018January14";
 		String baseUrl = "http://showlistaustin.com" ;
 		WebClient client = new WebClient();
 		client.getOptions().setCssEnabled(false);

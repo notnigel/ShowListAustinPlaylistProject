@@ -30,7 +30,8 @@ public class Oauth2Controller {
   private static final String APPLICATION_NAME = "Showlistaustinplaylist";
   static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
   //This authorization token needs to be replaced for each run
-  private static String OAUTH2AUTHTOKEN = "Bearer BQDnXeWwR-pwSlDDRtDwnsMopS2Uk_IjtrSTP-Dr1B96a_PMpl5xVm_ZxM_WdNlyMzUl5439ObhEVjdi2uZeLyTA6aeqKW1O9yECAnODn-cAlcQNaqP_yINuNIscvpXzHbJ0JaZA4CcST7_a7S5Y7ConOTbCytTZ6p-GXaaiGDncIKq7nVEc";
+  private static String OAUTH2AUTHTOKEN = "Bearer BQBt8owE4DuXjlGDegAGyMXmVJl7w0rnJEm0uLuuH0G0XBwKkxfrRET54xQtQCTTc4-dkn2E4B1aTpe6YclqZzoGb60eIPxBzACzsN1neXqhQB-nJzMawNZXqpL3H7qDpco4E6xzEALL3C1PUjwSxLUd3Atory9ATOfLtR8UWLcQSbVQmS-3CzYaR3aD1Dw_4g";
+
   /** Directory to store user credentials. */
   private static final java.io.File DATA_STORE_DIR =
       new java.io.File(System.getProperty("/resources"), ".store/oauth2_spotify");

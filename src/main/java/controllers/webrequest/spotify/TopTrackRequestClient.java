@@ -42,7 +42,7 @@ public class TopTrackRequestClient {
           }
         });
     
-    String oauth2AccessToken = "Bearer " + Oauth2Controller.retrieveAccessToken();    
+    String oauth2AccessToken = Oauth2Controller.getOAUTH2AUTHTOKEN();  
     String baseUrl = "https://api.spotify.com/v1/artists/";
     baseUrl = 	baseUrl + artist + 
     			"/top-tracks?country=US"; 

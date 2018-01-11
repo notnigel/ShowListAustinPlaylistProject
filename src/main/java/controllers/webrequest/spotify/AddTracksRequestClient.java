@@ -33,7 +33,7 @@ public class AddTracksRequestClient {
 	  static final JsonFactory JSON_FACTORY = new JacksonFactory();
 	  
 	  static final String TYPE = "artist";
-	  static final String USER = "niggity_nige";
+	  static final String USER = "hi63nr6jeyewgbcscpvcvom8y";
 	  private static final Integer [] SUCCESS = new Integer [] {0, 200, 202};	
 	  private static final Set<Integer> SUCCESSCODES = new HashSet<Integer>(Arrays.asList(SUCCESS));
 
