@@ -80,7 +80,7 @@ public class ArtistRequestClient {
 		if(!artistResponse.getArtists().getItems().isEmpty()) {
 			
 			for (int i = 0; i < artistResponse.getArtists().getItems().size(); i++) {
-				if (artistResponse.getArtists().getItems().get(i).getName().equals(artist)) {
+				if (artistResponse.getArtists().getItems().get(i).getName().equalsIgnoreCase(artist)) {
 					return artistResponse.getArtists().getItems().get(i).getId();
 				}
 			}
