@@ -30,7 +30,7 @@ public class Oauth2Controller {
   private static final String APPLICATION_NAME = "Showlistaustinplaylist";
   static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
   //This authorization token needs to be replaced for each run
-  private static String OAUTH2AUTHTOKEN = "Bearer BQBt8owE4DuXjlGDegAGyMXmVJl7w0rnJEm0uLuuH0G0XBwKkxfrRET54xQtQCTTc4-dkn2E4B1aTpe6YclqZzoGb60eIPxBzACzsN1neXqhQB-nJzMawNZXqpL3H7qDpco4E6xzEALL3C1PUjwSxLUd3Atory9ATOfLtR8UWLcQSbVQmS-3CzYaR3aD1Dw_4g";
+  private static String OAUTH2AUTHTOKEN = "Bearer BQCoOp89D-m27JxB0WqFRlBKv_AXDskMs_EldeeoBimkOowlfo-giDoH0n8H-MqmXkmr2JFKpwLD3Mp49bq-nnBG3bnBeCjGgm-RM33pA6OkEb1OpwrgvurycKF0ipUudxUL2YzNGyxbfMKzSskZ8j-4rmqAmM-EaziR1MaeR3Y_4c_ONU69SvpWmKLgSuWiZcFBlw";
 
   /** Directory to store user credentials. */
   private static final java.io.File DATA_STORE_DIR =

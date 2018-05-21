@@ -68,10 +68,9 @@ public class AddTracksRequestClient {
 	    SpotifyUrl url = new SpotifyUrl(baseUrl);
 	    
 	  	//Create request
-	    HttpRequest request = requestFactory.buildPostRequest(url, null);
+	    HttpRequest request = requestFactory.buildPostRequest(url, ByteArrayContent.fromString("application/json", "{}"));
 	    HttpHeaders headers = new HttpHeaders();
-	    headers.setAccept("application/json");
-	    headers.setAuthorization(Oauth2Controller.getOAUTH2AUTHTOKEN());	    
+	    headers.setAuthorization(Oauth2Controller.getOAUTH2AUTHTOKEN());
 	    request.setHeaders(headers);
 
 	    HttpResponse response = request.execute();
