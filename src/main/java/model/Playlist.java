@@ -24,6 +24,11 @@ public class Playlist {
 		this.description = "This playlist contains bands playing on " + searchDate;
 		this.artists = artists;
 	}
+	
+	public Playlist(ArrayList<Artist> artists) {
+		this.id = "1P3hy2Rt9fi91w823NiuuP";
+		this.artists = artists;
+	}
 
 	public Date getDate() {
 		return date;
