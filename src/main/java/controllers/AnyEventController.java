@@ -27,8 +27,29 @@ public class AnyEventController {
 	 * !!!!!!!!!!Modify the list name and the artists before running!!!!!!!!!
 	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 */
-	final static String PLAYLIST_NAME = "ACL 2018";
-	final static String EVENT_LINEUP = "";
+	final static String PLAYLIST_NAME = "Discover Hot Summer Nights 2018";
+	final static String EVENT_LINEUP = "Emily Wolfe, Quiet Company, Darkbird, Good Field, Think No Think, Chakra Kahn, Lord Buffalo, MAMAHAWK," +
+			"Holy Wave, Annabelle Chairlegs, Nolan Potter's Nightmare Band, Dollar General," +
+			"Gio Chamba, Migrant Kids, Como Las Movies, Volcán, Stella, Late, llinx," +
+			"Hovvdy, Why Bonnie, Loafer, Tåsi," +
+			"Cilantro Boombox, Big Wy's Brass Band, Skymomma, Zoumountchi, Just Blaze, Black Milk, DJ Rapid Ric, Kid Slyce," +
+			"Fuss Ricket, The Young Something, anatomi, Jessie Frye," +
+			"Big Bill, Moving Panoramas, Leather Girls," +
+			"Jess Williamson, Marijuana Sweet Tooth, Cowboy Crisis, RF SHANNON, Daphne tunes, Con Davison, Dreamspook" +
+			"Tia Carrera, Dixie Witch, Greenbeard, Duel Crypt Trip, Blastfamous USA, BLXPLTN, Megafauna, Honey and Salt, Deals, Elevaded," +
+			"Golden Dawn Arkestra, Mamafesta," +
+			"Pleasure Venom, Nervous Exits, King Country," +
+			"Riverboat Gamblers, Sealion, Dentist, Hey Jellie," +
+			"Chromagnus, Billy King & The Bad Bad Bad, Rickshaw Billie's Burger Patrol, Slow Seers," +
+			"Ringo Deathstarr, Growl, Shmu, SAILOR POON, Flesh Lights, Being Dead," +
+			"Eagle Claw, Mandate, Fanclub, The Ghost Wolves, Chief White Lightning, BOOHER, Altamesa," +
+			"Dude Elsberry, Why Bonnie, Datenight, Bleary Eyed," +
+			"The Reputations, minihorse, Say Girl Say, Pearl Crush, Lola Tried, Royal Forest, Dan Gentile, Flying Turns," +
+			"Moving Panoramas, Good Field, Fragile Rock, SMiiLE, Sometimes a Legend, Sphynx, BUHU, Haulm, TC Superstar," +
+			"the Teddys, Big Britches, The Sun Machine, Friendly the band," +
+			"Blushing, Mopac," +
+			"Fat Tony, Mike Melinoe, Dj Big Daddy B, DJ Dorito, DJ DICK WOLF";
+			
 
 	static ArrayList<Artist> artists = new ArrayList<Artist>();
 
@@ -38,6 +59,12 @@ public class AnyEventController {
 		 */
 		String[] bands = EVENT_LINEUP.split("(,|\\n)");
 
+		/*
+		 * Trim off whitespace
+		 */
+		for(int i = 0; i < bands.length; i++)
+			bands[i] = bands[i].trim();
+		
 		/*
 		 * Add artists to artists array
 		 */
@@ -103,11 +130,11 @@ public class AnyEventController {
 
 		while (artists.size() > 100) {
 			ArrayList<Artist> artists1 = new ArrayList<Artist>(artists.subList(0, 100));
-			playlists.add(new Playlist(PLAYLIST_NAME, artists1));
+			playlists.add(new Playlist(artists1, PLAYLIST_NAME));
 			artists.subList(0, 100).clear();
 		}
 
-		playlists.add(new Playlist(PLAYLIST_NAME, artists));
+		playlists.add(new Playlist(artists, PLAYLIST_NAME));
 		String playlistId = CreatePlaylistRequestClient.run(playlists.get(0));
 
 		for (int i = 0; i < playlists.size(); i++) {

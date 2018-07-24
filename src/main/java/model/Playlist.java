@@ -25,6 +25,12 @@ public class Playlist {
 		this.artists = artists;
 	}
 	
+	public Playlist(ArrayList<Artist> artists, String name) throws ParseException {
+		this.name = name;
+		this.description = "This is a generated playlist for the event";
+		this.artists = artists;
+	}
+	
 	public Playlist(ArrayList<Artist> artists) {
 		this.id = "1P3hy2Rt9fi91w823NiuuP";
 		this.artists = artists;
