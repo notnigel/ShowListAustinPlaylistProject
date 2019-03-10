@@ -30,7 +30,7 @@ public class WeekendPlaylistController {
 	 * !!!!!!!!!!Modify these dates for the weekend before running!!!!!!!!!!!
 	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 */
-	final static String[] DAYS = { "2018July27", "2018July28", "2018July29" };
+	final static String[] DAYS = { "2019February28", "2019March1", "2019March2" };
 	final static String BASEURL = "http://showlistaustin.com";
 	static WebClient client = new WebClient();
 	static ArrayList<Artist> artists = new ArrayList<Artist>();
