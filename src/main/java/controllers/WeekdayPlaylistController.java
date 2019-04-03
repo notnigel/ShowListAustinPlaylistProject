@@ -26,7 +26,7 @@ public class WeekdayPlaylistController {
 	 * !!!!!!!!!!Modify these dates for the weekend before running!!!!!!!!!!!
 	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 */
-	final static Id PLAYLIST_ID = Id.;
+	final static Id PLAYLIST_ID = Id.WEDNESDAY;
 	final static String[] DAYS = { "2019April3"};
 	final static String BASEURL = "http://showlistaustin.com";
 	static WebClient client = new WebClient();
