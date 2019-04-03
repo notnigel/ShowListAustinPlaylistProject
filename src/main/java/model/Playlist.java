@@ -36,6 +36,11 @@ public class Playlist {
 		this.artists = artists;
 	}
 
+	public Playlist(ArrayList<Artist> artists, Id id) {
+		this.id = id.getAction();
+		this.artists = artists;
+	}
+
 	public Date getDate() {
 		return date;
 	}
